@@ -1,63 +1,37 @@
 "use client";
 
+import Sidebar from "@/components/Sidebar";
+import HumanoidSkeleton from "@/components/HumanoidSkeleton";
+import QuadrupedSkeleton from "@/components/QuadrupedSkeleton";
+import UploadPanel from "@/components/UploadPanel";
+import BOMPanel from "@/components/BOMPanel";
+import DFMReport from "@/components/DFMReport";
+import SupplyModal from "@/components/SupplyModal";
 import { useStore } from "@/store/useStore";
-import Sidebar from "./Sidebar";
-import HumanoidSkeleton from "./HumanoidSkeleton";
-import QuadrupedSkeleton from "./QuadrupedSkeleton";
-import UploadPanel from "./UploadPanel";
-import BOMPanel from "./BOMPanel";
-import DFMReport from "./DFMReport";
-import SupplyModal from "./SupplyModal";
 
 export default function Workspace() {
-  const { robotType } = useStore();
+  const robotType = useStore((s) => s.robotType);
 
   return (
-    <div className="flex h-screen bg-[#15122B] overflow-hidden">
-      {/* Left sidebar */}
+    <div className="flex h-screen bg-[#F8FAFC]">
       <Sidebar />
 
-      {/* Main content area */}
-      <div className="flex flex-1 min-w-0">
-        {/* Center - 3D preview / skeleton */}
-        <div className="flex-1 flex flex-col min-w-0">
-          <div className="px-5 py-3 border-b border-[#231E45] flex items-center justify-between">
-            <div>
-              <h2 className="text-sm font-bold text-white">
-                {robotType === "humanoid" ? "人形机器人" : "四足机器人"} · 结构预览
-              </h2>
-              <p className="text-xs text-[#8C85B2]">点击热点节点上传对应组件图纸</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#8B5CF6] animate-pulse-glow" />
-              <span className="text-xs text-[#8C85B2]">待上传</span>
-              <div className="w-2 h-2 rounded-full bg-[#F59E0B] ml-2" />
-              <span className="text-xs text-[#8C85B2]">分析中</span>
-              <div className="w-2 h-2 rounded-full bg-[#22C55E] ml-2" />
-              <span className="text-xs text-[#8C85B2]">已完成</span>
-            </div>
-          </div>
-
-          <div className="flex-1 flex items-center justify-center p-8 relative overflow-hidden">
-            {/* Grid + mesh background */}
-            <div className="absolute inset-0 tech-grid opacity-40" />
-            <div className="absolute inset-0 purple-mesh-bg" />
-            <div className="relative z-10 w-full h-full max-w-xl">
-              {robotType === "humanoid" ? <HumanoidSkeleton /> : <QuadrupedSkeleton />}
-            </div>
+      <div className="flex-1 flex relative overflow-hidden">
+        <div className="flex-1 flex items-center justify-center p-8 relative">
+          <div className="absolute inset-0 blue-mesh-bg" />
+          <div className="absolute inset-0 tech-grid opacity-40" />
+          <div className="relative z-10 w-full h-full flex items-center justify-center">
+            {robotType === "humanoid" ? <HumanoidSkeleton /> : <QuadrupedSkeleton />}
           </div>
         </div>
 
-        {/* Right panel - BOM or Upload */}
-        <div className="w-80 border-l border-[#231E45] flex flex-col bg-[#15122B]">
+        <div className="w-80 border-l border-[#E2E8F0] bg-white overflow-hidden">
           <BOMPanel />
         </div>
 
-        {/* Upload slide panel */}
         <UploadPanel />
       </div>
 
-      {/* Modals */}
       <DFMReport />
       <SupplyModal />
     </div>

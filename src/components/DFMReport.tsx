@@ -1,283 +1,122 @@
 "use client";
 
-import { useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   X,
   AlertTriangle,
   AlertCircle,
   Info,
   CheckCircle2,
-  TrendingUp,
-  Wrench,
-  Shield,
-  Zap,
   FileText,
+  Download,
 } from "lucide-react";
 import { useStore } from "@/store/useStore";
-import { dfmWarnings, categoryColors } from "@/data/mockData";
-import type { BOMItem } from "@/data/mockData";
-
-const levelConfig = {
-  error: { icon: AlertCircle, color: "#EF4444", bg: "#EF4444", label: "严重" },
-  warning: { icon: AlertTriangle, color: "#F59E0B", bg: "#F59E0B", label: "警告" },
-  info: { icon: Info, color: "#A78BFA", bg: "#8B5CF6", label: "建议" },
-};
-
-function CircularProgress({ score }: { score: number }) {
-  const radius = 54;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (score / 100) * circumference;
-  const color = score >= 90 ? "#22C55E" : score >= 70 ? "#F59E0B" : "#EF4444";
-
-  return (
-    <div className="relative w-36 h-36">
-      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r={radius} fill="none" stroke="#231E45" strokeWidth="8" />
-        <motion.circle
-          cx="60"
-          cy="60"
-          r={radius}
-          fill="none"
-          stroke={color}
-          strokeWidth="8"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          initial={{ strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset: offset }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <motion.span
-          className="text-3xl font-bold"
-          style={{ color }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          {score}
-        </motion.span>
-        <span className="text-xs text-[#8C85B2]">可制造性得分</span>
-      </div>
-    </div>
-  );
-}
+import { dfmWarnings } from "@/data/mockData";
 
 export default function DFMReport() {
   const { showDFMReport, setShowDFMReport, uploadedComponents } = useStore();
-
-  const allBomItems = useMemo(() => {
-    const items: BOMItem[] = [];
-    Object.values(uploadedComponents).forEach((c) => items.push(...c.bomItems));
-    return items;
-  }, [uploadedComponents]);
-
-  const stats = useMemo(() => {
-    const screwTypes = new Set(
-      allBomItems.filter((i) => i.name.includes("螺钉")).map((i) => i.partNumber)
-    );
-    const machined = allBomItems.filter((i) => i.category === "机加工件").length;
-    const totalCost = allBomItems.reduce((s, i) => s + (i.unitPrice || 0) * i.quantity, 0);
-    return {
-      totalParts: allBomItems.length,
-      totalQuantity: allBomItems.reduce((s, i) => s + i.quantity, 0),
-      screwTypes: screwTypes.size,
-      machinedParts: machined,
-      totalCost,
-      anodizedParts: allBomItems.filter((i) => i.surfaceTreatment?.includes("阳极氧化")).length,
-    };
-  }, [allBomItems]);
-
-  const dfmScore = useMemo(() => {
-    let score = 100;
-    if (stats.screwTypes > 5) score -= 8;
-    if (stats.screwTypes > 3) score -= 4;
-    if (stats.anodizedParts > 3) score -= 3;
-    const errors = dfmWarnings.filter((w) => w.level === "error").length;
-    const warnings = dfmWarnings.filter((w) => w.level === "warning").length;
-    score -= errors * 5;
-    score -= warnings * 2;
-    return Math.max(0, Math.min(100, score));
-  }, [stats]);
-
   if (!showDFMReport) return null;
 
+  const uploadedCount = Object.keys(uploadedComponents).length;
+  const totalWarnings = dfmWarnings.length;
+  const errorCount = dfmWarnings.filter((w) => w.level === "error").length;
+  const warnCount = dfmWarnings.filter((w) => w.level === "warning").length;
+  const infoCount = dfmWarnings.filter((w) => w.level === "info").length;
+
+  const levelConfig = {
+    error: { icon: AlertCircle, color: "#DC2626", bg: "#FEF2F2", border: "#FECACA", label: "\u4e25\u91cd" },
+    warning: { icon: AlertTriangle, color: "#D97706", bg: "#FFFBEB", border: "#FDE68A", label: "\u8b66\u544a" },
+    info: { icon: Info, color: "#0068B7", bg: "#EFF6FF", border: "#BFDBFE", label: "\u5efa\u8bae" },
+  };
+
   return (
-    <AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4"
+      onClick={() => setShowDFMReport(false)}
+    >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-        onClick={() => setShowDFMReport(false)}
+        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.95, opacity: 0, y: 20 }}
+        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-3xl max-h-[85vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-[#E2E8F0]"
       >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0, y: 20 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          transition={{ type: "spring", damping: 25 }}
-          className="w-full max-w-4xl max-h-[90vh] bg-[#15122B] border border-[#37306A] rounded-2xl overflow-hidden flex flex-col shadow-[0_0_60px_rgba(139,92,246,0.1)]"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-[#231E45] flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-[#8B5CF6]/10 flex items-center justify-center">
-                <FileText className="w-5 h-5 text-[#A78BFA]" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-white">DFM 分析报告</h2>
-                <p className="text-xs text-[#8C85B2]">基于已上传的 {Object.keys(uploadedComponents).length} 个组件生成</p>
-              </div>
+        <div className="px-6 py-4 border-b border-[#E2E8F0] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#0068B7]/10 flex items-center justify-center">
+              <FileText className="w-5 h-5 text-[#0068B7]" />
             </div>
-            <button
-              onClick={() => setShowDFMReport(false)}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-[#8C85B2] hover:bg-[#231E45] hover:text-white transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
-            {/* Score & Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="md:col-span-1 flex items-center justify-center p-6 bg-[#231E45]/50 rounded-xl border border-[#37306A]/50">
-                <CircularProgress score={dfmScore} />
-              </div>
-              <div className="md:col-span-2 grid grid-cols-2 gap-3">
-                {[
-                  { icon: TrendingUp, label: "零件种类", value: stats.totalParts, unit: "种", color: "#8B5CF6" },
-                  { icon: Wrench, label: "机加工件", value: stats.machinedParts, unit: "种", color: "#F59E0B" },
-                  { icon: Shield, label: "紧固件规格", value: stats.screwTypes, unit: "种", color: stats.screwTypes > 5 ? "#EF4444" : "#22C55E" },
-                  { icon: Zap, label: "阳极氧化件", value: stats.anodizedParts, unit: "件", color: "#C084FC" },
-                ].map((stat) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-[#231E45]/50 rounded-xl border border-[#37306A]/50"
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <stat.icon className="w-4 h-4" style={{ color: stat.color }} />
-                      <span className="text-xs text-[#8C85B2]">{stat.label}</span>
-                    </div>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-2xl font-bold text-white font-mono">{stat.value}</span>
-                      <span className="text-xs text-[#8C85B2]">{stat.unit}</span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Cost Breakdown */}
-            <div className="p-4 bg-[#231E45]/50 rounded-xl border border-[#37306A]/50">
-              <h3 className="text-sm font-bold text-white mb-3">成本预估</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex gap-6">
-                  {Object.entries(
-                    allBomItems.reduce(
-                      (acc, item) => {
-                        const cat = item.category;
-                        acc[cat] = (acc[cat] || 0) + (item.unitPrice || 0) * item.quantity;
-                        return acc;
-                      },
-                      {} as Record<string, number>
-                    )
-                  ).map(([cat, cost]) => (
-                    <div key={cat} className="text-center">
-                      <p className="text-xs text-[#8C85B2] mb-1">{cat}</p>
-                      <p
-                        className="text-sm font-bold font-mono"
-                        style={{ color: categoryColors[cat as keyof typeof categoryColors] || "#B8B2D8" }}
-                      >
-                        ¥{Math.round(cost).toLocaleString()}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-[#8C85B2]">总计预估</p>
-                  <p className="text-xl font-bold text-[#22C55E] font-mono">
-                    ¥{stats.totalCost.toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* DFM Warnings */}
             <div>
-              <h3 className="text-sm font-bold text-white mb-3">DFM 评估结果</h3>
-              <div className="space-y-2.5">
-                {dfmWarnings.map((warning, i) => {
-                  const config = levelConfig[warning.level];
-                  const Icon = config.icon;
-                  return (
-                    <motion.div
-                      key={warning.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * i }}
-                      className="p-4 rounded-xl border"
-                      style={{
-                        backgroundColor: `${config.bg}08`,
-                        borderColor: `${config.bg}30`,
-                      }}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div
-                          className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                          style={{ backgroundColor: `${config.bg}15` }}
-                        >
-                          <Icon className="w-4 h-4" style={{ color: config.color }} />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-sm font-medium text-white">{warning.title}</span>
-                            <span
-                              className="px-1.5 py-0.5 rounded text-[10px] font-medium"
-                              style={{ backgroundColor: `${config.bg}20`, color: config.color }}
-                            >
-                              {config.label}
-                            </span>
-                            <span className="px-1.5 py-0.5 rounded text-[10px] bg-[#37306A] text-[#B8B2D8]">
-                              {warning.category}
-                            </span>
-                          </div>
-                          <p className="text-xs text-[#B8B2D8] mb-2 leading-relaxed">
-                            {warning.description}
-                          </p>
-                          <div className="flex items-start gap-1.5 p-2.5 bg-[#15122B]/50 rounded-lg">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#22C55E] flex-shrink-0 mt-0.5" />
-                            <p className="text-xs text-[#22C55E] leading-relaxed">
-                              {warning.suggestion}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
+              <h2 className="text-lg font-bold text-[#1E293B]">DFM 分析报告</h2>
+              <p className="text-xs text-[#94A3B8]">已分析 {uploadedCount} 个模组 · {totalWarnings} 条检查结果</p>
             </div>
           </div>
+          <button onClick={() => setShowDFMReport(false)} className="text-[#94A3B8] hover:text-[#475569] transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-          {/* Footer */}
-          <div className="px-6 py-4 border-t border-[#231E45] flex items-center justify-between">
-            <p className="text-xs text-[#8C85B2]">
-              报告生成时间: {new Date().toLocaleString("zh-CN")}
-            </p>
-            <button
-              onClick={() => window.print()}
-              className="px-4 py-2 bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white text-sm rounded-lg hover:from-[#7C3AED] hover:to-[#9333EA] transition-all shadow-[0_0_12px_rgba(139,92,246,0.2)]"
-            >
-              导出 PDF 报告
-            </button>
+        <div className="grid grid-cols-3 gap-3 px-6 py-4 border-b border-[#E2E8F0] bg-[#F8FAFC]">
+          <div className="text-center p-3 rounded-xl bg-white border border-[#E2E8F0]">
+            <div className="text-2xl font-bold text-[#DC2626]">{errorCount}</div>
+            <div className="text-xs text-[#94A3B8] mt-0.5">严重问题</div>
           </div>
-        </motion.div>
+          <div className="text-center p-3 rounded-xl bg-white border border-[#E2E8F0]">
+            <div className="text-2xl font-bold text-[#D97706]">{warnCount}</div>
+            <div className="text-xs text-[#94A3B8] mt-0.5">警告</div>
+          </div>
+          <div className="text-center p-3 rounded-xl bg-white border border-[#E2E8F0]">
+            <div className="text-2xl font-bold text-[#0068B7]">{infoCount}</div>
+            <div className="text-xs text-[#94A3B8] mt-0.5">优化建议</div>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-6 space-y-3">
+          {dfmWarnings.map((w, i) => {
+            const cfg = levelConfig[w.level];
+            const Icon = cfg.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.04 }}
+                className="rounded-xl p-4 border"
+                style={{ backgroundColor: cfg.bg, borderColor: cfg.border }}
+              >
+                <div className="flex items-start gap-3">
+                  <Icon className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: cfg.color }} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ backgroundColor: cfg.color + "18", color: cfg.color }}>
+                        {cfg.label}
+                      </span>
+                      <span className="text-xs text-[#94A3B8]">{w.category}</span>
+                    </div>
+                    <p className="text-sm text-[#1E293B] font-medium">{w.description}</p>
+                    <p className="text-xs text-[#64748B] mt-1">{w.suggestion}</p>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <div className="px-6 py-4 border-t border-[#E2E8F0] flex justify-between items-center bg-[#F8FAFC]">
+          <div className="flex items-center gap-2 text-sm text-[#16A34A]">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>初步 DFM 检查完成</span>
+          </div>
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#0068B7] text-white text-sm font-medium rounded-lg hover:bg-[#005A9E] transition-colors">
+            <Download className="w-4 h-4" />
+            导出报告
+          </button>
+        </div>
       </motion.div>
-    </AnimatePresence>
+    </motion.div>
   );
 }

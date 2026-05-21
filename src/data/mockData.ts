@@ -368,10 +368,10 @@ export const dfmWarnings: DFMWarning[] = [
 ];
 
 export const categoryColors: Record<MaterialCategory, string> = {
-  "机加工件": "#8B5CF6",
-  "塑胶件": "#C084FC",
+  "机加工件": "#0068B7",
+  "塑胶件": "#3B8FD4",
   "标准件": "#6B7280",
-  "电子料": "#22C55E",
-  "线材": "#F59E0B",
-  "其他": "#9B95C4",
+  "电子料": "#16A34A",
+  "线材": "#D97706",
+  "其他": "#94A3B8",
 };
