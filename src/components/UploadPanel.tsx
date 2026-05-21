@@ -83,19 +83,19 @@ export default function UploadPanel() {
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: 300, opacity: 0 }}
         transition={{ type: "spring", damping: 25 }}
-        className="w-80 h-full bg-[#0F172A] border-l border-[#1E293B] flex flex-col overflow-hidden"
+        className="w-80 h-full bg-[#15122B] border-l border-[#231E45] flex flex-col overflow-hidden"
       >
         {/* Header */}
-        <div className="px-5 py-4 border-b border-[#1E293B] flex items-center justify-between">
+        <div className="px-5 py-4 border-b border-[#231E45] flex items-center justify-between">
           <div>
             <h3 className="text-sm font-bold text-white">
               {componentData?.label || selectedHotspot}
             </h3>
-            <p className="text-xs text-[#64748B] mt-0.5">组件图纸上传</p>
+            <p className="text-xs text-[#8C85B2] mt-0.5">组件图纸上传</p>
           </div>
           <button
             onClick={() => selectHotspot(null)}
-            className="w-7 h-7 rounded-md flex items-center justify-center text-[#64748B] hover:bg-[#1E293B] hover:text-white transition-colors"
+            className="w-7 h-7 rounded-md flex items-center justify-center text-[#8C85B2] hover:bg-[#231E45] hover:text-white transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -110,20 +110,20 @@ export default function UploadPanel() {
               onDrop={handleDrop}
               className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
                 isDragOver
-                  ? "border-[#3B82F6] bg-[#3B82F6]/10"
-                  : "border-[#334155] hover:border-[#3B82F6]/50"
+                  ? "border-[#8B5CF6] bg-[#8B5CF6]/10"
+                  : "border-[#37306A] hover:border-[#8B5CF6]/50"
               }`}
             >
-              <div className="w-12 h-12 rounded-full bg-[#1E293B] flex items-center justify-center mx-auto mb-4">
-                <Upload className="w-5 h-5 text-[#3B82F6]" />
+              <div className="w-12 h-12 rounded-full bg-[#231E45] flex items-center justify-center mx-auto mb-4">
+                <Upload className="w-5 h-5 text-[#A78BFA]" />
               </div>
-              <p className="text-sm text-[#94A3B8] mb-2">拖拽图纸文件至此处</p>
-              <p className="text-xs text-[#64748B] mb-4">
+              <p className="text-sm text-[#B8B2D8] mb-2">拖拽图纸文件至此处</p>
+              <p className="text-xs text-[#8C85B2] mb-4">
                 支持 .step / .stp / .iges / .dxf / .pdf
               </p>
               <button
                 onClick={simulateUpload}
-                className="px-4 py-2 bg-[#3B82F6] text-white text-sm rounded-lg hover:bg-[#2563EB] transition-colors"
+                className="px-4 py-2 bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white text-sm rounded-lg hover:from-[#7C3AED] hover:to-[#9333EA] transition-all shadow-[0_0_12px_rgba(139,92,246,0.2)]"
               >
                 选择文件上传
               </button>
@@ -137,39 +137,37 @@ export default function UploadPanel() {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-4"
             >
-              <div className="relative h-40 rounded-xl bg-[#1E293B] border border-[#334155] overflow-hidden">
-                {/* Scan effect */}
+              <div className="relative h-40 rounded-xl bg-[#231E45] border border-[#37306A] overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <FileImage className="w-16 h-16 text-[#334155]" />
+                  <FileImage className="w-16 h-16 text-[#37306A]" />
                 </div>
                 <div className="absolute inset-0 overflow-hidden">
-                  <div className="absolute w-full h-1 bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent animate-scan-line" />
+                  <div className="absolute w-full h-1 bg-gradient-to-r from-transparent via-[#8B5CF6] to-transparent animate-scan-line" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#0F172A] to-transparent">
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#15122B] to-transparent">
                   <div className="flex items-center gap-2">
-                    <Scan className="w-3.5 h-3.5 text-[#3B82F6] animate-pulse" />
-                    <span className="text-xs text-[#60A5FA] font-mono">{scanMessage}</span>
+                    <Scan className="w-3.5 h-3.5 text-[#A78BFA] animate-pulse" />
+                    <span className="text-xs text-[#A78BFA] font-mono">{scanMessage}</span>
                   </div>
                 </div>
               </div>
 
-              {/* Progress bar */}
               <div>
                 <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="text-[#94A3B8]">分析进度</span>
-                  <span className="text-[#3B82F6] font-mono">{Math.round(scanProgress)}%</span>
+                  <span className="text-[#B8B2D8]">分析进度</span>
+                  <span className="text-[#A78BFA] font-mono">{Math.round(scanProgress)}%</span>
                 </div>
-                <div className="h-2 bg-[#1E293B] rounded-full overflow-hidden">
+                <div className="h-2 bg-[#231E45] rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] rounded-full animate-breathe"
+                    className="h-full bg-gradient-to-r from-[#8B5CF6] to-[#A78BFA] rounded-full animate-breathe"
                     style={{ width: `${scanProgress}%` }}
                     transition={{ duration: 0.3 }}
                   />
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-xs text-[#64748B]">
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-[#3B82F6]" />
+              <div className="flex items-center gap-2 text-xs text-[#8C85B2]">
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-[#8B5CF6]" />
                 正在进行智能解析，请稍候...
               </div>
             </motion.div>
@@ -186,51 +184,49 @@ export default function UploadPanel() {
                 <CheckCircle2 className="w-5 h-5 text-[#22C55E] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-[#22C55E]">解析完成</p>
-                  <p className="text-xs text-[#94A3B8] mt-0.5">
+                  <p className="text-xs text-[#B8B2D8] mt-0.5">
                     已识别 {uploadedComponents[selectedHotspot]?.bomItems.length || 0} 个零部件
                   </p>
                 </div>
               </div>
 
-              {/* Quick BOM preview */}
               <div>
-                <h4 className="text-xs font-medium text-[#64748B] uppercase tracking-wider mb-2">
+                <h4 className="text-xs font-medium text-[#8C85B2] uppercase tracking-wider mb-2">
                   识别到的零部件
                 </h4>
                 <div className="space-y-1.5">
                   {uploadedComponents[selectedHotspot]?.bomItems.slice(0, 5).map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between px-3 py-2 bg-[#1E293B] rounded-lg text-xs animate-fade-in-up"
+                      className="flex items-center justify-between px-3 py-2 bg-[#231E45] rounded-lg text-xs animate-fade-in-up"
                     >
                       <div className="flex items-center gap-2 min-w-0">
                         <div
                           className="w-2 h-2 rounded-full flex-shrink-0"
                           style={{
                             backgroundColor:
-                              item.category === "机加工件" ? "#3B82F6"
-                              : item.category === "塑胶件" ? "#8B5CF6"
+                              item.category === "机加工件" ? "#8B5CF6"
+                              : item.category === "塑胶件" ? "#C084FC"
                               : item.category === "标准件" ? "#6B7280"
                               : item.category === "电子料" ? "#22C55E"
                               : "#F59E0B",
                           }}
                         />
-                        <span className="text-[#F8FAFC] truncate">{item.name}</span>
+                        <span className="text-[#F5F3FF] truncate">{item.name}</span>
                       </div>
-                      <span className="text-[#64748B] ml-2 flex-shrink-0">×{item.quantity}</span>
+                      <span className="text-[#8C85B2] ml-2 flex-shrink-0">x{item.quantity}</span>
                     </div>
                   ))}
                   {(uploadedComponents[selectedHotspot]?.bomItems.length || 0) > 5 && (
-                    <p className="text-xs text-[#64748B] text-center py-1">
+                    <p className="text-xs text-[#8C85B2] text-center py-1">
                       还有 {(uploadedComponents[selectedHotspot]?.bomItems.length || 0) - 5} 个零部件...
                     </p>
                   )}
                 </div>
               </div>
 
-              {/* Identified properties */}
               <div>
-                <h4 className="text-xs font-medium text-[#64748B] uppercase tracking-wider mb-2">
+                <h4 className="text-xs font-medium text-[#8C85B2] uppercase tracking-wider mb-2">
                   自动识别属性
                 </h4>
                 <div className="flex flex-wrap gap-1.5">
@@ -239,7 +235,7 @@ export default function UploadPanel() {
                     .map((item) => (
                       <span
                         key={item.id}
-                        className="px-2 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-md text-xs text-[#60A5FA]"
+                        className="px-2 py-1 bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 rounded-md text-xs text-[#A78BFA]"
                       >
                         {item.surfaceTreatment}
                       </span>
@@ -250,7 +246,7 @@ export default function UploadPanel() {
                     .map((item) => (
                       <span
                         key={item.id + "-mat"}
-                        className="px-2 py-1 bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 rounded-md text-xs text-[#A78BFA]"
+                        className="px-2 py-1 bg-[#C084FC]/10 border border-[#C084FC]/30 rounded-md text-xs text-[#D8B4FE]"
                       >
                         {item.material}
                       </span>

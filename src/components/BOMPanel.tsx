@@ -44,7 +44,7 @@ export default function BOMPanel() {
 
   if (allBomItems.length === 0) {
     return (
-      <div className="h-full flex flex-col items-center justify-center text-[#64748B] px-6">
+      <div className="h-full flex flex-col items-center justify-center text-[#8C85B2] px-6">
         <Package className="w-12 h-12 mb-4 opacity-30" />
         <p className="text-sm text-center">点击左侧骨架上的热点节点，上传组件图纸后将自动生成物料清单</p>
       </div>
@@ -54,22 +54,22 @@ export default function BOMPanel() {
   return (
     <div className="h-full flex flex-col overflow-hidden">
       {/* Summary header */}
-      <div className="px-5 py-4 border-b border-[#1E293B]">
+      <div className="px-5 py-4 border-b border-[#231E45]">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-bold text-white">智能 BOM 清单</h3>
-          <span className="px-2 py-0.5 bg-[#3B82F6]/10 text-[#60A5FA] text-xs rounded-full font-mono">
+          <span className="px-2 py-0.5 bg-[#8B5CF6]/10 text-[#A78BFA] text-xs rounded-full font-mono">
             {allBomItems.length} 项
           </span>
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <div className="p-2.5 bg-[#1E293B] rounded-lg">
-            <p className="text-xs text-[#64748B]">零件总数</p>
+          <div className="p-2.5 bg-[#231E45] rounded-lg">
+            <p className="text-xs text-[#8C85B2]">零件总数</p>
             <p className="text-lg font-bold text-white font-mono">
               {allBomItems.reduce((s, i) => s + i.quantity, 0)}
             </p>
           </div>
-          <div className="p-2.5 bg-[#1E293B] rounded-lg">
-            <p className="text-xs text-[#64748B]">预估成本</p>
+          <div className="p-2.5 bg-[#231E45] rounded-lg">
+            <p className="text-xs text-[#8C85B2]">预估成本</p>
             <p className="text-lg font-bold text-[#22C55E] font-mono">
               ¥{totalCost.toLocaleString()}
             </p>
@@ -78,7 +78,7 @@ export default function BOMPanel() {
       </div>
 
       {/* Category tags */}
-      <div className="px-5 py-3 border-b border-[#1E293B] flex flex-wrap gap-1.5">
+      <div className="px-5 py-3 border-b border-[#231E45] flex flex-wrap gap-1.5">
         {Object.entries(categorized).map(([cat, items]) => {
           const Icon = categoryIcons[cat as MaterialCategory];
           return (
@@ -120,7 +120,7 @@ export default function BOMPanel() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.03 }}
-                  className="group px-3 py-2.5 bg-[#1E293B]/60 hover:bg-[#1E293B] rounded-lg transition-colors"
+                  className="group px-3 py-2.5 bg-[#231E45]/60 hover:bg-[#231E45] rounded-lg transition-colors"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0 flex-1">
@@ -132,10 +132,10 @@ export default function BOMPanel() {
                         <span className="text-sm text-white truncate">{item.name}</span>
                       </div>
                       <div className="flex items-center gap-3 mt-1 ml-3.5">
-                        <span className="text-xs text-[#64748B] font-mono">{item.partNumber}</span>
-                        <span className="text-xs text-[#64748B]">×{item.quantity}</span>
+                        <span className="text-xs text-[#8C85B2] font-mono">{item.partNumber}</span>
+                        <span className="text-xs text-[#8C85B2]">x{item.quantity}</span>
                         {item.unitPrice !== undefined && (
-                          <span className="text-xs text-[#94A3B8]">
+                          <span className="text-xs text-[#B8B2D8]">
                             ¥{item.unitPrice}
                           </span>
                         )}
@@ -143,12 +143,12 @@ export default function BOMPanel() {
                       {(item.surfaceTreatment || item.material || item.remark) && (
                         <div className="flex flex-wrap gap-1 mt-1.5 ml-3.5">
                           {item.surfaceTreatment && (
-                            <span className="px-1.5 py-0.5 bg-[#3B82F6]/10 text-[#60A5FA] text-[10px] rounded">
+                            <span className="px-1.5 py-0.5 bg-[#8B5CF6]/10 text-[#A78BFA] text-[10px] rounded">
                               {item.surfaceTreatment}
                             </span>
                           )}
                           {item.material && (
-                            <span className="px-1.5 py-0.5 bg-[#8B5CF6]/10 text-[#A78BFA] text-[10px] rounded">
+                            <span className="px-1.5 py-0.5 bg-[#C084FC]/10 text-[#D8B4FE] text-[10px] rounded">
                               {item.material}
                             </span>
                           )}
@@ -163,7 +163,7 @@ export default function BOMPanel() {
                     {item.purchaseLink && (
                       <button
                         onClick={() => setSupplyModalItem(item)}
-                        className="w-7 h-7 rounded-md flex items-center justify-center text-[#64748B] hover:bg-[#334155] hover:text-[#3B82F6] transition-colors opacity-0 group-hover:opacity-100 flex-shrink-0"
+                        className="w-7 h-7 rounded-md flex items-center justify-center text-[#8C85B2] hover:bg-[#37306A] hover:text-[#A78BFA] transition-colors opacity-0 group-hover:opacity-100 flex-shrink-0"
                         title="查看供应链"
                       >
                         <ShoppingCart className="w-3.5 h-3.5" />

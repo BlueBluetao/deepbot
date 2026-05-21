@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #0F172A;
-  --bg-secondary: #1E293B;
-  --bg-tertiary: #334155;
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --accent: #3B82F6;
-  --accent-glow: #60A5FA;
-  --success: #22C55E;
-  --warning: #F59E0B;
-  --danger: #EF4444;
-  --border: #334155;
-  --surface: rgba(30, 41, 59, 0.8);
+  --bg-primary: #15122B;
+  --bg-secondary: #231E45;
+  --bg-tertiary: #37306A;
+  --text-primary: #F5F3FF;
+  --text-secondary: #B8B2D8;
+  --text-muted: #8C85B2;
+  --accent: #8B5CF6;
+  --accent-glow: #A78BFA;
+  --accent-light: #C4B5FD;
+  --success: #34D399;
+  --warning: #FBBF24;
+  --danger: #F87171;
+  --border: #37306A;
+  --surface: rgba(35, 30, 69, 0.85);
 }
 
 @theme inline {
@@ -50,8 +51,18 @@ body {
 }
 
 @keyframes breathe {
-  0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+  0%, 100% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.4); }
+  50% { box-shadow: 0 0 24px rgba(139, 92, 246, 0.9); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 .animate-pulse-glow {
@@ -70,21 +81,44 @@ body {
   animation: breathe 3s ease-in-out infinite;
 }
 
+.animate-shimmer {
+  animation: shimmer 3s linear infinite;
+  background-size: 200% 100%;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
 .hotspot-node {
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .hotspot-node:hover {
-  filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.8));
+  filter: drop-shadow(0 0 14px rgba(139, 92, 246, 0.9));
 }
 
 .glass-panel {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.6);
+  background: rgba(21, 18, 43, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(55, 48, 106, 0.6);
 }
 
 .gradient-border {
-  border-image: linear-gradient(135deg, #3B82F6, #8B5CF6) 1;
+  border-image: linear-gradient(135deg, #8B5CF6, #EC4899) 1;
+}
+
+.tech-grid {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.purple-mesh-bg {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(192, 132, 252, 0.08) 0%, transparent 50%);
 }

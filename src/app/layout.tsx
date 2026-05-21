@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "具身智能 · 机器人 DFM 分析平台",
+  title: "聚深智能 · 机器人 DFM 分析平台",
   description: "从模糊结构到精确设计的交互式 DFM 智能分析平台",
 };
 
@@ -27,7 +27,7 @@ export default function RootLayout({
       lang="zh-CN"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0F172A] text-[#F8FAFC]">
+      <body className="min-h-full flex flex-col bg-[#15122B] text-[#F5F3FF]">
         {children}
       </body>
     </html>

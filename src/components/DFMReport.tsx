@@ -21,7 +21,7 @@ import type { BOMItem } from "@/data/mockData";
 const levelConfig = {
   error: { icon: AlertCircle, color: "#EF4444", bg: "#EF4444", label: "严重" },
   warning: { icon: AlertTriangle, color: "#F59E0B", bg: "#F59E0B", label: "警告" },
-  info: { icon: Info, color: "#3B82F6", bg: "#3B82F6", label: "建议" },
+  info: { icon: Info, color: "#A78BFA", bg: "#8B5CF6", label: "建议" },
 };
 
 function CircularProgress({ score }: { score: number }) {
@@ -33,7 +33,7 @@ function CircularProgress({ score }: { score: number }) {
   return (
     <div className="relative w-36 h-36">
       <svg className="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r={radius} fill="none" stroke="#1E293B" strokeWidth="8" />
+        <circle cx="60" cy="60" r={radius} fill="none" stroke="#231E45" strokeWidth="8" />
         <motion.circle
           cx="60"
           cy="60"
@@ -58,7 +58,7 @@ function CircularProgress({ score }: { score: number }) {
         >
           {score}
         </motion.span>
-        <span className="text-xs text-[#64748B]">可制造性得分</span>
+        <span className="text-xs text-[#8C85B2]">可制造性得分</span>
       </div>
     </div>
   );
@@ -117,23 +117,23 @@ export default function DFMReport() {
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: "spring", damping: 25 }}
-          className="w-full max-w-4xl max-h-[90vh] bg-[#0F172A] border border-[#1E293B] rounded-2xl overflow-hidden flex flex-col"
+          className="w-full max-w-4xl max-h-[90vh] bg-[#15122B] border border-[#37306A] rounded-2xl overflow-hidden flex flex-col shadow-[0_0_60px_rgba(139,92,246,0.1)]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="px-6 py-4 border-b border-[#1E293B] flex items-center justify-between">
+          <div className="px-6 py-4 border-b border-[#231E45] flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-[#3B82F6]/10 flex items-center justify-center">
-                <FileText className="w-5 h-5 text-[#3B82F6]" />
+              <div className="w-9 h-9 rounded-lg bg-[#8B5CF6]/10 flex items-center justify-center">
+                <FileText className="w-5 h-5 text-[#A78BFA]" />
               </div>
               <div>
                 <h2 className="text-lg font-bold text-white">DFM 分析报告</h2>
-                <p className="text-xs text-[#64748B]">基于已上传的 {Object.keys(uploadedComponents).length} 个组件生成</p>
+                <p className="text-xs text-[#8C85B2]">基于已上传的 {Object.keys(uploadedComponents).length} 个组件生成</p>
               </div>
             </div>
             <button
               onClick={() => setShowDFMReport(false)}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-[#64748B] hover:bg-[#1E293B] hover:text-white transition-colors"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-[#8C85B2] hover:bg-[#231E45] hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -143,29 +143,29 @@ export default function DFMReport() {
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {/* Score & Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="md:col-span-1 flex items-center justify-center p-6 bg-[#1E293B]/50 rounded-xl border border-[#334155]/50">
+              <div className="md:col-span-1 flex items-center justify-center p-6 bg-[#231E45]/50 rounded-xl border border-[#37306A]/50">
                 <CircularProgress score={dfmScore} />
               </div>
               <div className="md:col-span-2 grid grid-cols-2 gap-3">
                 {[
-                  { icon: TrendingUp, label: "零件种类", value: stats.totalParts, unit: "种", color: "#3B82F6" },
+                  { icon: TrendingUp, label: "零件种类", value: stats.totalParts, unit: "种", color: "#8B5CF6" },
                   { icon: Wrench, label: "机加工件", value: stats.machinedParts, unit: "种", color: "#F59E0B" },
                   { icon: Shield, label: "紧固件规格", value: stats.screwTypes, unit: "种", color: stats.screwTypes > 5 ? "#EF4444" : "#22C55E" },
-                  { icon: Zap, label: "阳极氧化件", value: stats.anodizedParts, unit: "件", color: "#8B5CF6" },
+                  { icon: Zap, label: "阳极氧化件", value: stats.anodizedParts, unit: "件", color: "#C084FC" },
                 ].map((stat) => (
                   <motion.div
                     key={stat.label}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-[#1E293B]/50 rounded-xl border border-[#334155]/50"
+                    className="p-4 bg-[#231E45]/50 rounded-xl border border-[#37306A]/50"
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <stat.icon className="w-4 h-4" style={{ color: stat.color }} />
-                      <span className="text-xs text-[#64748B]">{stat.label}</span>
+                      <span className="text-xs text-[#8C85B2]">{stat.label}</span>
                     </div>
                     <div className="flex items-baseline gap-1">
                       <span className="text-2xl font-bold text-white font-mono">{stat.value}</span>
-                      <span className="text-xs text-[#64748B]">{stat.unit}</span>
+                      <span className="text-xs text-[#8C85B2]">{stat.unit}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -173,7 +173,7 @@ export default function DFMReport() {
             </div>
 
             {/* Cost Breakdown */}
-            <div className="p-4 bg-[#1E293B]/50 rounded-xl border border-[#334155]/50">
+            <div className="p-4 bg-[#231E45]/50 rounded-xl border border-[#37306A]/50">
               <h3 className="text-sm font-bold text-white mb-3">成本预估</h3>
               <div className="flex items-center justify-between">
                 <div className="flex gap-6">
@@ -188,10 +188,10 @@ export default function DFMReport() {
                     )
                   ).map(([cat, cost]) => (
                     <div key={cat} className="text-center">
-                      <p className="text-xs text-[#64748B] mb-1">{cat}</p>
+                      <p className="text-xs text-[#8C85B2] mb-1">{cat}</p>
                       <p
                         className="text-sm font-bold font-mono"
-                        style={{ color: categoryColors[cat as keyof typeof categoryColors] || "#94A3B8" }}
+                        style={{ color: categoryColors[cat as keyof typeof categoryColors] || "#B8B2D8" }}
                       >
                         ¥{Math.round(cost).toLocaleString()}
                       </p>
@@ -199,7 +199,7 @@ export default function DFMReport() {
                   ))}
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-[#64748B]">总计预估</p>
+                  <p className="text-xs text-[#8C85B2]">总计预估</p>
                   <p className="text-xl font-bold text-[#22C55E] font-mono">
                     ¥{stats.totalCost.toLocaleString()}
                   </p>
@@ -242,14 +242,14 @@ export default function DFMReport() {
                             >
                               {config.label}
                             </span>
-                            <span className="px-1.5 py-0.5 rounded text-[10px] bg-[#334155] text-[#94A3B8]">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] bg-[#37306A] text-[#B8B2D8]">
                               {warning.category}
                             </span>
                           </div>
-                          <p className="text-xs text-[#94A3B8] mb-2 leading-relaxed">
+                          <p className="text-xs text-[#B8B2D8] mb-2 leading-relaxed">
                             {warning.description}
                           </p>
-                          <div className="flex items-start gap-1.5 p-2.5 bg-[#0F172A]/50 rounded-lg">
+                          <div className="flex items-start gap-1.5 p-2.5 bg-[#15122B]/50 rounded-lg">
                             <CheckCircle2 className="w-3.5 h-3.5 text-[#22C55E] flex-shrink-0 mt-0.5" />
                             <p className="text-xs text-[#22C55E] leading-relaxed">
                               {warning.suggestion}
@@ -265,13 +265,13 @@ export default function DFMReport() {
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-4 border-t border-[#1E293B] flex items-center justify-between">
-            <p className="text-xs text-[#64748B]">
+          <div className="px-6 py-4 border-t border-[#231E45] flex items-center justify-between">
+            <p className="text-xs text-[#8C85B2]">
               报告生成时间: {new Date().toLocaleString("zh-CN")}
             </p>
             <button
               onClick={() => window.print()}
-              className="px-4 py-2 bg-[#3B82F6] text-white text-sm rounded-lg hover:bg-[#2563EB] transition-colors"
+              className="px-4 py-2 bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white text-sm rounded-lg hover:from-[#7C3AED] hover:to-[#9333EA] transition-all shadow-[0_0_12px_rgba(139,92,246,0.2)]"
             >
               导出 PDF 报告
             </button>

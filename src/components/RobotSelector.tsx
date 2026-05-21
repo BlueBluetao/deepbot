@@ -25,22 +25,26 @@ export default function RobotSelector() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0F172A] px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#15122B] px-4 relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0 purple-mesh-bg" />
+      <div className="absolute inset-0 tech-grid opacity-30" />
+
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-16"
+        className="text-center mb-16 relative z-10"
       >
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-          <span className="text-[#3B82F6]">具身智能</span> · 机器人 DFM 分析平台
+          <span className="bg-gradient-to-r from-[#A78BFA] to-[#C084FC] bg-clip-text text-transparent">聚深智能</span> · 机器人 DFM 分析平台
         </h1>
-        <p className="text-lg text-[#94A3B8] max-w-2xl mx-auto">
+        <p className="text-lg text-[#B8B2D8] max-w-2xl mx-auto">
           上传机器人图纸，自动实现物料提取、加工工艺分析、装配逻辑评估及供应链溯源
         </p>
       </motion.div>
 
-      <div className="flex flex-col md:flex-row gap-8 w-full max-w-4xl">
+      <div className="flex flex-col md:flex-row gap-8 w-full max-w-4xl relative z-10">
         {cards.map((card, i) => (
           <motion.button
             key={card.type}
@@ -50,24 +54,24 @@ export default function RobotSelector() {
             whileHover={{ scale: 1.03, y: -4 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setRobotType(card.type)}
-            className="flex-1 group relative overflow-hidden rounded-2xl border border-[#334155] bg-[#1E293B]/80 backdrop-blur-sm p-8 text-left transition-all hover:border-[#3B82F6]/60 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)]"
+            className="flex-1 group relative overflow-hidden rounded-2xl border border-[#37306A] bg-[#231E45]/80 backdrop-blur-sm p-8 text-left transition-all hover:border-[#8B5CF6]/60 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#8B5CF6]/5 via-[#A855F7]/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
-              <div className="w-16 h-16 rounded-xl bg-[#3B82F6]/10 flex items-center justify-center mb-6 group-hover:bg-[#3B82F6]/20 transition-colors">
-                <card.icon className="w-8 h-8 text-[#3B82F6]" />
+              <div className="w-16 h-16 rounded-xl bg-[#8B5CF6]/10 flex items-center justify-center mb-6 group-hover:bg-[#8B5CF6]/20 transition-colors">
+                <card.icon className="w-8 h-8 text-[#A78BFA]" />
               </div>
               <h2 className="text-2xl font-bold text-white mb-2">{card.title}</h2>
-              <p className="text-[#94A3B8] mb-6">{card.desc}</p>
+              <p className="text-[#B8B2D8] mb-6">{card.desc}</p>
               <div className="space-y-2">
                 {card.features.map((f) => (
-                  <div key={f} className="flex items-center gap-2 text-sm text-[#64748B]">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#3B82F6]" />
+                  <div key={f} className="flex items-center gap-2 text-sm text-[#8C85B2]">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]" />
                     {f}
                   </div>
                 ))}
               </div>
-              <div className="mt-6 text-sm text-[#3B82F6] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="mt-6 text-sm text-[#A78BFA] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                 点击选择此模板 →
               </div>
             </div>
@@ -79,9 +83,9 @@ export default function RobotSelector() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="mt-12 text-[#64748B] text-sm"
+        className="mt-12 text-[#8C85B2] text-sm relative z-10"
       >
-        Demo 版本 · 具身智能 © 2026
+        Demo 版本 · 聚深智能 © 2026
       </motion.p>
     </div>
   );

@@ -54,45 +54,45 @@ export default function SupplyModal() {
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: "spring", damping: 25 }}
-          className="w-full max-w-lg bg-[#0F172A] border border-[#1E293B] rounded-2xl overflow-hidden"
+          className="w-full max-w-lg bg-[#15122B] border border-[#37306A] rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(139,92,246,0.1)]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="px-6 py-4 border-b border-[#1E293B] flex items-center justify-between">
+          <div className="px-6 py-4 border-b border-[#231E45] flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-[#F59E0B]/10 flex items-center justify-center">
                 <ShoppingCart className="w-5 h-5 text-[#F59E0B]" />
               </div>
               <div>
                 <h2 className="text-sm font-bold text-white">供应链溯源</h2>
-                <p className="text-xs text-[#64748B]">{supplyModalItem.name}</p>
+                <p className="text-xs text-[#8C85B2]">{supplyModalItem.name}</p>
               </div>
             </div>
             <button
               onClick={() => setShowSupplyModal(false)}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-[#64748B] hover:bg-[#1E293B] hover:text-white transition-colors"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-[#8C85B2] hover:bg-[#231E45] hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Product info */}
-          <div className="px-6 py-4 border-b border-[#1E293B]">
+          <div className="px-6 py-4 border-b border-[#231E45]">
             <div className="flex gap-4">
-              <div className="w-20 h-20 rounded-xl bg-[#1E293B] flex items-center justify-center flex-shrink-0">
-                <ShoppingCart className="w-8 h-8 text-[#334155]" />
+              <div className="w-20 h-20 rounded-xl bg-[#231E45] flex items-center justify-center flex-shrink-0">
+                <ShoppingCart className="w-8 h-8 text-[#37306A]" />
               </div>
               <div className="min-w-0 flex-1">
                 <h3 className="text-sm font-medium text-white mb-1">{supplyModalItem.name}</h3>
-                <p className="text-xs text-[#64748B] font-mono mb-2">{supplyModalItem.partNumber}</p>
+                <p className="text-xs text-[#8C85B2] font-mono mb-2">{supplyModalItem.partNumber}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {supplyModalItem.material && (
-                    <span className="px-1.5 py-0.5 bg-[#8B5CF6]/10 text-[#A78BFA] text-[10px] rounded">
+                    <span className="px-1.5 py-0.5 bg-[#C084FC]/10 text-[#D8B4FE] text-[10px] rounded">
                       {supplyModalItem.material}
                     </span>
                   )}
                   {supplyModalItem.surfaceTreatment && (
-                    <span className="px-1.5 py-0.5 bg-[#3B82F6]/10 text-[#60A5FA] text-[10px] rounded">
+                    <span className="px-1.5 py-0.5 bg-[#8B5CF6]/10 text-[#A78BFA] text-[10px] rounded">
                       {supplyModalItem.surfaceTreatment}
                     </span>
                   )}
@@ -112,7 +112,7 @@ export default function SupplyModal() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="p-4 bg-[#1E293B]/60 rounded-xl border border-[#334155]/50 hover:border-[#334155] transition-colors group"
+                className="p-4 bg-[#231E45]/60 rounded-xl border border-[#37306A]/50 hover:border-[#37306A] transition-colors group"
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -125,14 +125,14 @@ export default function SupplyModal() {
                       </span>
                       <span className="text-sm text-white">{s.name}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-xs text-[#64748B]">
+                    <div className="flex items-center gap-3 text-xs text-[#8C85B2]">
                       <span className="flex items-center gap-1">
                         <Star className="w-3 h-3 text-[#F59E0B]" />
                         {s.rating}
                       </span>
                       <span>{s.sales}+ 人付款</span>
                     </div>
-                    <div className="flex items-center gap-3 mt-1.5 text-xs text-[#64748B]">
+                    <div className="flex items-center gap-3 mt-1.5 text-xs text-[#8C85B2]">
                       <span className="flex items-center gap-1">
                         <Truck className="w-3 h-3" />
                         {s.delivery}
@@ -147,7 +147,7 @@ export default function SupplyModal() {
                     <p className="text-lg font-bold text-[#EF4444] font-mono">
                       ¥{s.price}
                     </p>
-                    <button className="mt-1.5 flex items-center gap-1 px-3 py-1.5 bg-[#3B82F6] text-white text-xs rounded-lg hover:bg-[#2563EB] transition-colors opacity-80 group-hover:opacity-100">
+                    <button className="mt-1.5 flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-[#8B5CF6] to-[#A855F7] text-white text-xs rounded-lg hover:from-[#7C3AED] hover:to-[#9333EA] transition-all opacity-80 group-hover:opacity-100">
                       <ExternalLink className="w-3 h-3" />
                       前往购买
                     </button>
@@ -158,8 +158,8 @@ export default function SupplyModal() {
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-3 border-t border-[#1E293B]">
-            <p className="text-[10px] text-[#475569] text-center">
+          <div className="px-6 py-3 border-t border-[#231E45]">
+            <p className="text-[10px] text-[#4A4280] text-center">
               以上价格及链接仅供参考，实际采购请以供应商报价为准 · Demo 演示数据
             </p>
           </div>
