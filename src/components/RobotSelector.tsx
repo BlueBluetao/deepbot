@@ -37,7 +37,7 @@ export default function RobotSelector() {
         className="text-center mb-16 relative z-10"
       >
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-          <span className="bg-gradient-to-r from-[#A78BFA] to-[#C084FC] bg-clip-text text-transparent">聚深智能</span> · 机器人 DFM 分析平台
+          <span className="bg-gradient-to-r from-[#A78BFA] to-[#C084FC] bg-clip-text text-transparent">具身智能</span> · 机器人 DFM 分析平台
         </h1>
         <p className="text-lg text-[#B8B2D8] max-w-2xl mx-auto">
           上传机器人图纸，自动实现物料提取、加工工艺分析、装配逻辑评估及供应链溯源
@@ -85,7 +85,7 @@ export default function RobotSelector() {
         transition={{ delay: 1 }}
         className="mt-12 text-[#8C85B2] text-sm relative z-10"
       >
-        Demo 版本 · 聚深智能 © 2026
+        Demo 版本 · 具身智能 © 2026
       </motion.p>
     </div>
   );

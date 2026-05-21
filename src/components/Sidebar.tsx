@@ -38,7 +38,7 @@ export default function Sidebar() {
             <Bot className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-sm font-bold text-white leading-tight">聚深智能</h1>
+            <h1 className="text-sm font-bold text-white leading-tight">具身智能</h1>
             <p className="text-xs text-[#8C85B2]">DFM 分析平台</p>
           </div>
         </div>
