@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "聚深智能 · 机器人 DFM 分析平台",
+  title: "具身智能 · 机器人 DFM 分析平台",
   description: "从模糊结构到精确设计的交互式 DFM 智能分析平台",
 };
 

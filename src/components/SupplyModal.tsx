@@ -74,7 +74,7 @@ export default function SupplyModal() {
         </div>
 
         <div className="px-5 py-3 border-t border-[#E2E8F0] text-center text-xs text-[#94A3B8] bg-[#F8FAFC]">
-          数据来源：聚深智能供应链数据库（Demo）
+          数据来源：具身智能供应链数据库（Demo）
         </div>
       </motion.div>
     </motion.div>
